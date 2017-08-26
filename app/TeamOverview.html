@@ -1,0 +1,91 @@
+<html ng-app="eventsApp">
+<head>
+</head>
+<body>
+<div class = "container">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <ul class="nav">
+            
+            </ul>
+        </div>
+    </div>
+    <style>input.ng-invalid.ng-dirty {background-color: pink}</style>
+	<div ng-controller="TeamOverviewController">
+        <!--img ng-src="{{team.imageUrl}}"/-->
+ 		<!--div class="row"-->
+            <div class = "container">
+                <h1>New Team member</h1>
+                <hr/>
+                <form name="newTeamForm">
+                    <table>
+                            <tr>
+                                <td><label for="empId">Id :</label></td>
+                                <td><input id="empId" type="text" value="{{team.employee_id}}" required ng-model="team.employee_id" placeholder="Id of team member"></td>
+                            </tr>
+                            <tr>
+                                <td><label for="teamName">Name :</label></td>
+                                <td><input id="teamName" type="text" value="{{team.employee_name}}" required ng-model="team.employee_name" placeholder="Name of team member"></td>
+                            </tr>
+                            <tr>
+                                <td><label for="paymentDate">Date of payment :</label></td>
+                                <td><input id="paymentDate" type="text" value="{{team.date}}" required ng-pattern="/\d\d/\d\d/\d\d\d\d/" ng-model="team.date" placeholder="format (mm/dd/yyyy)"></td>
+                            </tr>
+                            <tr>
+                                <td><label for="pendingAmount">Pending Amount :</label></td>
+                                <td><input id="pendingAmount" type="text" value="{{team.amount}}" required ng-model="team.amount" placeholder="Pending Amount"></td>
+                            </tr>
+                            <tr>
+                                <td><label for="month">Month(s) :</label></td>
+                                <td><input id="month" type="text" value="{{team.month}}" required ng-model="team.month" placeholder="For month(s)"></td>
+                            </tr>
+                    </table>
+                    <br/>
+                    <br/>
+                    <button type="submit" ng-disabled="newTeamForm.$invalid" ng-click="addTeamMember(team, newTeamForm)">Submit</button> 
+                    
+                    <h2>{{PostDataResponse}}</h2>
+                </form>
+                
+            <!--/div-->
+            
+        </div>
+        <div  ng-init="getAll()">
+            
+            <table>
+                <tr>
+                    <th>Employee Id</th><th>Employee Name</th><th>Date</th><th>Pending Amount</th><th>Month</th>
+                </tr>
+                <tr ng-repeat="teamMember in teams">
+                    
+                        <td ng-hide="isVisible">{{teamMember.employee_id}}</td>
+                        <td ng-hide="isVisible">{{teamMember.employee_name}}</td>
+                        <td ng-hide="isVisible">{{teamMember.date}}</td>
+                        <td ng-hide="isVisible">{{teamMember.amount}}</td>
+                        <td ng-hide="isVisible">{{teamMember.month}}</td>
+                    
+                    
+                        <td ng-show="isVisible"><input type="text" value="{{teamMember.employee_id}}" disabled=true></td>
+                        <td ng-show="isVisible"><input type="text" value="{{teamMember.employee_name}}" ng-model="teamMember.employee_name"></td>
+                        <td ng-show="isVisible"><input type="text" value="{{teamMember.date}}" ng-model="teamMember.date"></td>
+                        <td ng-show="isVisible"><input type="text" value="{{teamMember.amount}}" ng-model="teamMember.amount"></td>
+                        <td ng-show="isVisible"><input type="text" value="{{teamMember.month}}" ng-model="teamMember.month"></td>
+                    
+                    
+                    <td ng-hide="isVisible"><a href="#" class="btn" ng-click="update()">Update</a></td>
+                    <td ng-show="isVisible"><a href="#" class="btn" ng-click="saveUpdate(teamMember)">Save</a></td>
+                    <td><a href="#" class="btn" ng-click="remove(teamMember)">Delete</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="/app/lib/jquery.min.js"></script>
+<script src="/app/lib/underscore-1.4.4.min.js"></script>
+<script src="/app/lib/bootstrap.min.js"></script>
+<script src="/app/lib/angular/angular.js"></script>
+<script src="/app/js/app.js"></script>
+<script src="/app/js/controllers/TeamOverviewController.js"></script>
+<script src="/app/js/services/TeamOverviewService.js"></script>
+</body>
+</html>
